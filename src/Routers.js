@@ -7,8 +7,9 @@ import Splash from "./Components/Splash";
 import CreateEventForm from "./Components/Event/CreateEventForm";
 import Maps from "./Components/Event/Map";
 import feedPrincipal from "./Components/Feed/Feed.js";
-
 import Configuracao from "./Components/Configure/Configuracao";
+import Chat from "./Components/Chat/Chat.js"
+
 
 const Routers = () => {
   return (
@@ -25,8 +26,10 @@ const Routers = () => {
           <Scene key="map" component={Maps} hideNavBar />
           <Scene key="feedPrincipal" component={feedPrincipal} hideNavBar />
         </Scene>
-        <Scene key="configuracao" component={Configuracao} hideNavBar />
+        <Scene key="configuracao" component={Configuracao} hideNavBar />    
+        <Scene key="chat" component={Chat} hideNavBar />  
       </Scene>
+      
     </Router>
   );
 };

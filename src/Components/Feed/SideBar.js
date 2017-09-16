@@ -61,6 +61,20 @@ class SideBar extends Component {
             </Text>
           </Button>
           <Button
+            onPress={() => {
+              this.props.closeDrawer();
+              Actions.chat();
+            }}
+            iconLeft
+            block
+            style={{ marginTop: 20, marginLeft: 5, marginRight: 5 }}
+          >
+            <Icon name="ios-chatboxes-outline" />
+            <Text style={{ color: 'rgba(255,255,255,0.8)', alignSelf: 'center' }}>
+              Chat
+            </Text>
+          </Button>
+          <Button
             iconLeft
             onPress={() => this.logout()}
             block
