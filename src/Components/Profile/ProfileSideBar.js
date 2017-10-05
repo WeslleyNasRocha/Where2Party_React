@@ -14,8 +14,8 @@ class ProfileSideBar extends Component {
           style={{
             alignSelf: 'center',
             marginTop: 20,
-            height: 150,
-            width: 150
+            height: 200,
+            width: 200
           }}
         />
         <View style={{ alignItems: 'center', paddingTop: 25, paddingBottom: 25 }}>

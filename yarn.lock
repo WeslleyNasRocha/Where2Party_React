@@ -4452,9 +4452,9 @@ react-native-animatable@^1.2.3:
   dependencies:
     prop-types "^15.5.10"
 
-"react-native-drawer@git+https://github.com/GeekyAnts/react-native-drawer.git":
+"react-native-drawer@https://github.com/GeekyAnts/react-native-drawer":
   version "2.3.0"
-  resolved "git+https://github.com/GeekyAnts/react-native-drawer.git#8d9078516d177c9cb02d2579a6860706d2370d25"
+  resolved "https://github.com/GeekyAnts/react-native-drawer#8d9078516d177c9cb02d2579a6860706d2370d25"
   dependencies:
     prop-types "^15.5.8"
     tween-functions "^1.0.1"
@@ -4487,6 +4487,16 @@ react-native-geocoding@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/react-native-geocoding/-/react-native-geocoding-0.2.0.tgz#c76d3b51890e3cc2c76505bf3a4781623cfcccc3"
 
+react-native-gifted-listview@0.0.15:
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/react-native-gifted-listview/-/react-native-gifted-listview-0.0.15.tgz#c92b5b7b32cea7705b727ab4bc199751379dce07"
+  dependencies:
+    react-native-gifted-spinner "^0.0.4"
+
+react-native-gifted-spinner@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-gifted-spinner/-/react-native-gifted-spinner-0.0.4.tgz#32652b5a60423f14719a1c3125613299af0995f2"
+
 react-native-gridview@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/react-native-gridview/-/react-native-gridview-0.1.1.tgz#0f9a3fadb95dfef186790cbf10176628199fa127"
@@ -4495,9 +4505,9 @@ react-native-image-crop-picker@^0.16.0:
   version "0.16.1"
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.16.1.tgz#37efb419276c691ac0f99d497ef787b53e652fc2"
 
-"react-native-keyboard-aware-scroll-view@git+https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view.git":
+"react-native-keyboard-aware-scroll-view@https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view":
   version "0.2.9"
-  resolved "git+https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view.git#f4805f254d6cc8e3329f5fb224944401f66655db"
+  resolved "https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view#f4805f254d6cc8e3329f5fb224944401f66655db"
   dependencies:
     create-react-class "^15.6.0"
     prop-types "^15.5.10"

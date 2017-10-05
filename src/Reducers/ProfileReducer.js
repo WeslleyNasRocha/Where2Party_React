@@ -8,7 +8,7 @@ import {
 } from '../Actions/Types';
 
 const INITIAL_STATE = {
-  ProfileImagePath: 'http://via.placeholder.com/150x150',
+  ProfileImagePath: 'http://via.placeholder.com/200x200',
   ProfileImageData: '',
   Error: '',
   ProfileImageMime: '',
