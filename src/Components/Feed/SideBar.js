@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { Content, Text, Container, Header, Button, Icon, Thumbnail, View } from 'native-base';
+import {
+  Content,
+  Text,
+  Container,
+  Header,
+  Button,
+  Icon,
+  Thumbnail,
+  View
+} from 'native-base';
 import { Image, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions, ActionConst } from 'react-native-router-flux';
@@ -30,9 +39,17 @@ class SideBar extends Component {
         <Content style={{ backgroundColor: '#ddd' }}>
           {this.renderProfile()}
           <View>
-            <Button iconLeft block style={{ marginTop: 20, marginLeft: 5, marginRight: 5 }}>
+            <Button
+              iconLeft
+              block
+              style={{ marginTop: 20, marginLeft: 5, marginRight: 5 }}
+            >
               <Icon name="wine" />
-              <Text style={{ color: 'rgba(255,255,255,0.8)', alignSelf: 'center' }}>Eventos</Text>
+              <Text
+                style={{ color: 'rgba(255,255,255,0.8)', alignSelf: 'center' }}
+              >
+                Eventos
+              </Text>
             </Button>
             <Button
               onPress={() => {
@@ -44,13 +61,25 @@ class SideBar extends Component {
               style={{ marginTop: 20, marginLeft: 5, marginRight: 5 }}
             >
               <Icon name="add-circle" />
-              <Text style={{ color: 'rgba(255,255,255,0.8)', alignSelf: 'center' }}>
+              <Text
+                style={{ color: 'rgba(255,255,255,0.8)', alignSelf: 'center' }}
+              >
                 Criar Evento
               </Text>
             </Button>
-            <Button iconLeft block style={{ marginTop: 20, marginLeft: 5, marginRight: 5 }}>
+            <Button
+              iconLeft
+              block
+              style={{ marginTop: 20, marginLeft: 5, marginRight: 5 }}
+              onPress={() => {
+                this.props.closeDrawer();
+                Actions.Profile();
+              }}
+            >
               <Icon name="shuffle" />
-              <Text style={{ color: 'rgba(255,255,255,0.8)', alignSelf: 'center' }}>
+              <Text
+                style={{ color: 'rgba(255,255,255,0.8)', alignSelf: 'center' }}
+              >
                 Alterar Perfil
               </Text>
             </Button>
@@ -64,7 +93,9 @@ class SideBar extends Component {
               style={{ marginTop: 20, marginLeft: 5, marginRight: 5 }}
             >
               <Icon name="settings" />
-              <Text style={{ color: 'rgba(255,255,255,0.8)', alignSelf: 'center' }}>
+              <Text
+                style={{ color: 'rgba(255,255,255,0.8)', alignSelf: 'center' }}
+              >
                 Configurações
               </Text>
             </Button>
@@ -76,7 +107,11 @@ class SideBar extends Component {
               style={{ marginTop: 20, marginLeft: 5, marginRight: 5 }}
             >
               <Icon name="exit" />
-              <Text style={{ color: 'rgba(255,255,255,0.8)', alignSelf: 'center' }}>Sair</Text>
+              <Text
+                style={{ color: 'rgba(255,255,255,0.8)', alignSelf: 'center' }}
+              >
+                Sair
+              </Text>
             </Button>
           </View>
         </Content>

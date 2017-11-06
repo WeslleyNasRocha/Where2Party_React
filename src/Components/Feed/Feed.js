@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { Container, Content, Header, Left, Body, Right, Title, Button, Icon } from 'native-base';
+import firebase from 'firebase';
+import {
+  Container,
+  Content,
+  Header,
+  Left,
+  Body,
+  Right,
+  Title,
+  Button,
+  Icon
+} from 'native-base';
 import EventList from '../Event/EventList';
 // Import reducer and actions
+import { eventsFetch } from '../../Actions';
 
 class Feed extends Component {
   render() {
@@ -16,28 +28,42 @@ class Feed extends Component {
             </Button>
           </Left>
           <Body>
-            <Title style={{ alignSelf: 'center', marginLeft: 65 }}>Eventos</Title>
+            <Title style={{ alignSelf: 'center', marginLeft: 65 }}>
+              Eventos
+            </Title>
           </Body>
           <Right>
-            <Button transparent>
-              <Icon name="ios-refresh" size={30} color={'#ffffff'} />
-            </Button>
             <Button
               transparent
               onPress={() => {
-                Actions.createEvent();
+                this.props.eventsFetch();
               }}
             >
+              <Icon name="ios-refresh" size={30} color={'#ffffff'} />
+            </Button>
+            <Button transparent onPress={() => {}}>
               <Icon name="add" size={30} color={'#ffffff'} />
             </Button>
           </Right>
         </Header>
         <Content padder>
-          <EventList />
+          <EventList
+            events={this.props.events}
+            refreshing={this.props.refreshing}
+            eventsFetch={() => {
+              this.props.eventsFetch();
+            }}
+          />
         </Content>
       </Container>
     );
   }
 }
 
-export default Feed;
+const mapStateToProps = ({ feed }) => {
+  const { events, refreshing } = feed;
+  //  console.log(events);
+  return { events, refreshing };
+};
+
+export default connect(mapStateToProps, { eventsFetch })(Feed);

@@ -11,8 +11,6 @@ import { feed } from '../../Reducers';
 class EventList extends Component {
   componentWillMount = () => {
     this.props.eventsFetch();
-    //console.log(this.props);
-    //this.createDataSource(this.props);
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -25,16 +23,8 @@ class EventList extends Component {
   // }
 
   onRefresh() {
-    this.props.eventsFetch();
+    //this.props.eventsFetch();
   }
-
-  // createDataSource({ events }) {
-  //   const ds = new ListView.DataSource({
-  //     rowHasChanged: (r1, r2) => r1 !== r2
-  //   });
-
-  //   this.dataSource = ds.cloneWithRows(events);
-  // }
 
   _keyExtractor = (item, index) => item.uid;
 
@@ -59,10 +49,4 @@ class EventList extends Component {
   }
 }
 
-const mapStateToProps = ({ feed }) => {
-  const { events, refreshing } = feed;
-  //  console.log(events);
-  return { events, refreshing };
-};
-
-export default connect(mapStateToProps, { eventsFetch })(EventList);
+export default EventList;

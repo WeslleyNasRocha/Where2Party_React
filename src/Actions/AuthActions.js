@@ -89,19 +89,25 @@ const loginUserSuccess = (dispatch, user) => {
 
   AsyncStorage.setItem('user_data', JSON.stringify(user));
 
-  console.log(JSON.stringify(user));
+  //console.log(JSON.stringify(user));
 
   firebase
     .database()
     .ref('usersProfiles')
+    .child(`${user.uid}`)
     .once('value')
     .then(snapshot => {
       console.log(snapshot);
-      if (snapshot.child(`${user.uid}`).exist()) {
-        Actions.Feed({ type: 'reset' });
+      if (snapshot.val() !== null) {
+        console.log('Already exists');
+        Actions.splash({ type: 'reset' });
       } else {
+        console.log('Profile not');
         Actions.Profile({ type: 'reset' });
       }
+    })
+    .catch(e => {
+      console.log(e);
     });
 };
 
