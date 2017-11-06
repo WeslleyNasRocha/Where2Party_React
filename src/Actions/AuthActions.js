@@ -31,7 +31,7 @@ export const loginAttempt = ({ email, password }) => dispatch => {
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(user => {
-      console.log(user);
+      //console.log(user);
       loginUserSuccess(dispatch, user);
     })
     .catch(error => {
@@ -97,12 +97,12 @@ const loginUserSuccess = (dispatch, user) => {
     .child(`${user.uid}`)
     .once('value')
     .then(snapshot => {
-      console.log(snapshot);
+      //console.log(snapshot);
       if (snapshot.val() !== null) {
-        console.log('Already exists');
+        //console.log('Already exists');
         Actions.splash({ type: 'reset' });
       } else {
-        console.log('Profile not');
+        //console.log('Profile not');
         Actions.Profile({ type: 'reset' });
       }
     })

@@ -21,7 +21,7 @@ export const loadImages = imgUrl =>
       .child(`${imgUrl}`)
       .getDownloadURL()
       .then(url => {
-        //console.log(`url da imagem: ${url}`);
+        //console.log(`url da imagem => ${url}`);
         dispatch({ type: EVENT_SCREEN_LOAD_IMAGE, payload: { uri: url } });
       })
       .catch(error => console.log(error));
@@ -69,7 +69,9 @@ export const getMap = eventLocale => {
           if (responseJson.routes.length) {
             dispatch({
               type: EVENT_SCREEN_GET_ROUTE,
-              payload: decodeRoute(responseJson.routes[0].overview_polyline.points)
+              payload: decodeRoute(
+                responseJson.routes[0].overview_polyline.points
+              )
             });
             dispatch({
               type: EVENT_SCREEN_GET_ROUTE_DATA,
@@ -90,7 +92,16 @@ export const getMap = eventLocale => {
 
 const decodeRoute = (t, e) => {
   for (
-    var n, o, u = 0, l = 0, r = 0, d = [], h = 0, i = 0, a = null, c = Math.pow(10, e || 5);
+    var n,
+      o,
+      u = 0,
+      l = 0,
+      r = 0,
+      d = [],
+      h = 0,
+      i = 0,
+      a = null,
+      c = Math.pow(10, e || 5);
     u < t.length;
 
   ) {
@@ -100,7 +111,10 @@ const decodeRoute = (t, e) => {
     (n = 1 & i ? ~(i >> 1) : i >> 1), (h = i = 0);
     do (a = t.charCodeAt(u++) - 63), (i |= (31 & a) << h), (h += 5);
     while (a >= 32);
-    (o = 1 & i ? ~(i >> 1) : i >> 1), (l += n), (r += o), d.push([l / c, r / c]);
+    (o = 1 & i ? ~(i >> 1) : i >> 1),
+      (l += n),
+      (r += o),
+      d.push([l / c, r / c]);
   }
   return (d = d.map(t => ({ latitude: t[0], longitude: t[1] })));
 };

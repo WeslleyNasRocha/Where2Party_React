@@ -66,7 +66,7 @@ class EventScreen extends Component {
   }
 
   componentWillUnmount() {
-    console.log('umounting');
+    // console.log('umounting');
     this.props.backToFeed();
   }
 
@@ -112,7 +112,16 @@ class EventScreen extends Component {
 
   editEvent(eventId) {
     // console.log(this.props);
-    const { Address, Data, Descricao, Local, Titulo, imgUrl, orgId, uid } = this.props;
+    const {
+      Address,
+      Data,
+      Descricao,
+      Local,
+      Titulo,
+      imgUrl,
+      orgId,
+      uid
+    } = this.props;
     const eventProps = {
       Address,
       Data,
@@ -164,7 +173,9 @@ class EventScreen extends Component {
             </Button>
           </Left>
           <Body>
-            <Title style={{ flexDirection: 'row', marginRight: 10 }}>{this.props.Titulo}</Title>
+            <Title style={{ flexDirection: 'row', marginRight: 10 }}>
+              {this.props.Titulo}
+            </Title>
           </Body>
           <Right>{this.renderChatIcon(this.props.sub)}</Right>
         </Header>
@@ -174,7 +185,10 @@ class EventScreen extends Component {
             <Card>
               <CardItem cardBody>
                 <View style={{ flex: 1, height: 300 }}>
-                  <Image source={this.props.imgUrl} style={{ flex: 1, alignSelf: 'stretch' }} />
+                  <Image
+                    source={this.props.imgUrl}
+                    style={{ flex: 1, alignSelf: 'stretch' }}
+                  />
                 </View>
               </CardItem>
               {this.renderEditButton()}
@@ -194,7 +208,9 @@ class EventScreen extends Component {
                       marginRight: -70
                     }}
                   >
-                    <Text style={{ paddingRight: 10, fontSize: 20 }}>{this.props.Data}</Text>
+                    <Text style={{ paddingRight: 10, fontSize: 20 }}>
+                      {this.props.Data}
+                    </Text>
                     <Icon name="md-calendar" style={{ color: '#ccc' }} />
                   </View>
                 </Right>
@@ -235,7 +251,9 @@ class EventScreen extends Component {
                 </Body>
               </CardItem>
               <CardItem>
-                <View style={{ flex: 1 }}>{this.renderButton(this.props.sub)}</View>
+                <View style={{ flex: 1 }}>
+                  {this.renderButton(this.props.sub)}
+                </View>
               </CardItem>
               <CardItem>
                 <Subs eventId={this.props.uid} />
@@ -264,7 +282,15 @@ const style = StyleSheet.create({
 //export default EventScreen;
 
 const mapStateToProps = ({ eventScreen }) => {
-  const { imgUrl, currentPosition, eventPosition, route, routeData, sub, owner } = eventScreen;
+  const {
+    imgUrl,
+    currentPosition,
+    eventPosition,
+    route,
+    routeData,
+    sub,
+    owner
+  } = eventScreen;
   return {
     imgUrl,
     currentPosition,

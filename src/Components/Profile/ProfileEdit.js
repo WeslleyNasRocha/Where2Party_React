@@ -27,15 +27,20 @@ class ProfileEdit extends Component {
       includeBase64: true,
       cropperCircleOverlay: true
     }).then(image => {
-      console.log(image);
+      // console.log(image);
       const { path, size, data, mime } = image;
       this.props.profileImageChange({ path, size, data, mime });
     });
   }
 
   onSave() {
-    console.log(this.props);
-    const { ProfileImagePath, ProfileImageMime, UserName, LastName } = this.props;
+    // console.log(this.props);
+    const {
+      ProfileImagePath,
+      ProfileImageMime,
+      UserName,
+      LastName
+    } = this.props;
 
     this.props.saveProfile({
       ProfileImagePath,
@@ -65,7 +70,7 @@ class ProfileEdit extends Component {
             justifyContent: 'center'
           }}
           onPress={() => {
-            console.log('change image');
+            // console.log('change image');
             this.imagePick();
           }}
         >
@@ -83,14 +88,16 @@ class ProfileEdit extends Component {
           <Item floatingLabel>
             <Label>Nome</Label>
             <Input
-              onChangeText={Text => this.props.changeField({ prop: 'UserName', value: Text })}
+              onChangeText={Text =>
+                this.props.changeField({ prop: 'UserName', value: Text })}
               value={this.props.UserName}
             />
           </Item>
           <Item floatingLabel last>
             <Label>Sobrenome</Label>
             <Input
-              onChangeText={Text => this.props.changeField({ prop: 'LastName', value: Text })}
+              onChangeText={Text =>
+                this.props.changeField({ prop: 'LastName', value: Text })}
               value={this.props.LastName}
             />
           </Item>

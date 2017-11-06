@@ -63,7 +63,7 @@ class CreateEventForm extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.props.Address);
+    // console.log(this.props.Address);
   }
 
   imagePick() {
@@ -73,10 +73,14 @@ class CreateEventForm extends Component {
       cropping: true,
       mediaType: 'photo',
       includeBase64: true
-    }).then(image => {
-      const { path, size, data, mime } = image;
-      this.props.eventImageChange({ path, size, data, mime });
-    });
+    })
+      .then(image => {
+        // console.log('image => ', mime);
+
+        const { path, size, data, mime } = image;
+        this.props.eventImageChange({ path, size, data, mime });
+      })
+      .catch(e => console.log('erro => ', e));
   }
 
   modalStatus(status) {
@@ -105,12 +109,16 @@ class CreateEventForm extends Component {
             </Button>
           </Left>
           <Body>
-            <Title style={{ flexDirection: 'row', marginRight: 10 }}>Crie o seu evento</Title>
+            <Title style={{ flexDirection: 'row', marginRight: 10 }}>
+              Crie o seu evento
+            </Title>
           </Body>
         </Header>
         <Content>
           <Form>
-            <Item style={{ flexDirection: 'column', justifyContent: 'flex-end' }}>
+            <Item
+              style={{ flexDirection: 'column', justifyContent: 'flex-end' }}
+            >
               <Image
                 source={{ uri: this.props.ImagePath }}
                 style={{
@@ -142,7 +150,10 @@ class CreateEventForm extends Component {
                 }}
               >
                 <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Local</Label>
-                <Text numberOfLines={1} style={{ color: '#fff', paddingLeft: 20, width: '100%' }}>
+                <Text
+                  numberOfLines={1}
+                  style={{ color: '#fff', paddingLeft: 20, width: '100%' }}
+                >
                   {this.props.Address}
                 </Text>
 
@@ -150,7 +161,9 @@ class CreateEventForm extends Component {
               </Button>
             </Item>
             <Item>
-              <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Descrição</Label>
+              <Label style={{ color: 'rgba(255,255,255,0.6)' }}>
+                Descrição
+              </Label>
               <Input
                 onChangeText={text =>
                   this.props.formValueChanged({
@@ -179,7 +192,10 @@ class CreateEventForm extends Component {
               block
               onPress={() => this.onButtonPress()}
             >
-              <Text style={{ color: 'rgba(255,255,255,0.8)' }}> Criar evento</Text>
+              <Text style={{ color: 'rgba(255,255,255,0.8)' }}>
+                {' '}
+                Criar evento
+              </Text>
             </Button>
           </Form>
           <DateTimePicker

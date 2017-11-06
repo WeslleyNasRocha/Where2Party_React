@@ -41,7 +41,12 @@ class Feed extends Component {
             >
               <Icon name="ios-refresh" size={30} color={'#ffffff'} />
             </Button>
-            <Button transparent onPress={() => {}}>
+            <Button
+              transparent
+              onPress={() => {
+                Actions.createEvent();
+              }}
+            >
               <Icon name="add" size={30} color={'#ffffff'} />
             </Button>
           </Right>

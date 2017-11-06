@@ -22,11 +22,11 @@ import {
 } from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import { ImagePicker } from 'react-native-image-crop-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import { event } from '../../Reducers';
 import {
-  eventCreated,
+  eventEdited,
   formValueChanged,
   dateTimeModalStatus,
   dateTimeConfirm,
@@ -37,8 +37,10 @@ import {
 class EditEvent extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    //console.log(props);
     this.initializeForm(props.cust);
+    this.state = { oldImage: this.props.cust.imgUrl.uri };
+    //console.log(this.state.oldImage);
   }
 
   initializeForm(prevProps) {
@@ -69,6 +71,7 @@ class EditEvent extends Component {
   }
 
   saveEdit() {
+    // console.log(this.state.oldImage);
     const {
       Titulo,
       Address,
@@ -81,7 +84,7 @@ class EditEvent extends Component {
       ImageMime,
       cust
     } = this.props;
-    this.props.eventCreated({
+    this.props.eventEdited({
       Titulo,
       Address,
       Descricao,
@@ -91,7 +94,8 @@ class EditEvent extends Component {
       ImageData,
       ImagePath,
       ImageMime,
-      edit: cust.uid
+      uid: cust.uid,
+      oldImage: this.state.oldImage
     });
   }
 
@@ -102,7 +106,14 @@ class EditEvent extends Component {
       cropping: true,
       mediaType: 'photo',
       includeBase64: true
-    });
+    })
+      .then(image => {
+        // console.log('image => ', mime);
+
+        const { path, size, data, mime } = image;
+        this.props.eventImageChange({ path, size, data, mime });
+      })
+      .catch(e => console.log('erro => ', e));
   }
 
   modalStatus(status) {
@@ -110,13 +121,13 @@ class EditEvent extends Component {
   }
 
   modalConfirm(date) {
-    console.log(date);
+    // console.log(date);
     this.props.dateTimeConfirm(date);
     this.modalStatus(false);
   }
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <Container>
         <Header>
@@ -126,12 +137,16 @@ class EditEvent extends Component {
             </Button>
           </Left>
           <Body>
-            <Title style={{ flexDirection: 'row', marginRight: 10 }}>Edite o seu evento</Title>
+            <Title style={{ flexDirection: 'row', marginRight: 10 }}>
+              Edite o seu evento
+            </Title>
           </Body>
         </Header>
         <Content style={{ backgroundColor: '#9c27b0' }}>
           <Form>
-            <Item style={{ flexDirection: 'column', justifyContent: 'flex-end' }}>
+            <Item
+              style={{ flexDirection: 'column', justifyContent: 'flex-end' }}
+            >
               <Image
                 source={{ uri: this.props.ImagePath }}
                 style={{
@@ -139,7 +154,7 @@ class EditEvent extends Component {
                   width: 300
                 }}
               />
-              <Button>
+              <Button onPress={() => this.imagePick()}>
                 <Text>Pick an image</Text>
               </Button>
             </Item>
@@ -163,7 +178,10 @@ class EditEvent extends Component {
                 }}
               >
                 <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Local</Label>
-                <Text numberOfLines={1} style={{ color: 'black', paddingLeft: 20 }}>
+                <Text
+                  numberOfLines={1}
+                  style={{ color: 'black', paddingLeft: 20 }}
+                >
                   {this.props.Address}
                 </Text>
 
@@ -171,7 +189,9 @@ class EditEvent extends Component {
               </Button>
             </Item>
             <Item>
-              <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Descrição</Label>
+              <Label style={{ color: 'rgba(255,255,255,0.6)' }}>
+                Descrição
+              </Label>
               <Input
                 onChangeText={text =>
                   this.props.formValueChanged({
@@ -200,7 +220,10 @@ class EditEvent extends Component {
               block
               onPress={() => this.saveEdit()}
             >
-              <Text style={{ color: 'rgba(255,255,255,0.8)' }}> Salvar evento</Text>
+              <Text style={{ color: 'rgba(255,255,255,0.8)' }}>
+                {' '}
+                Salvar evento
+              </Text>
             </Button>
           </Form>
           <DateTimePicker
@@ -247,7 +270,7 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
-  eventCreated,
+  eventEdited,
   formValueChanged,
   dateTimeModalStatus,
   dateTimeConfirm,

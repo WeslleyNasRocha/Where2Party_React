@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { Actions } from 'react-native-router-flux';
 import Geocoder from 'react-native-geocoding';
 import Firebase from 'firebase';
@@ -13,7 +14,8 @@ import {
   CANCEL_FORM_EVENT,
   EVENT_IMAGE_CHANGE,
   EVENT_IMAGE_OVERSIZE,
-  EVENT_EDIT
+  EVENT_EDITED,
+  EVENT_EDIT_ATTEMPT
 } from './Types';
 
 export const formValueChanged = ({ prop, value }) => ({
@@ -28,7 +30,7 @@ export const saveGpsLocation = ({
   longitudeDelta,
   Address
 }) => {
-  console.log({ latitude, longitude, latitudeDelta, longitudeDelta });
+  // console.log({ latitude, longitude, latitudeDelta, longitudeDelta });
   return dispatch => {
     dispatch({
       type: SAVE_GPS_LOCALE,
@@ -52,8 +54,7 @@ export const eventCreated = ({
   Data,
   ImageData,
   ImagePath,
-  ImageMime,
-  edit = ''
+  ImageMime
 }) => {
   console.log({
     path,
@@ -65,8 +66,7 @@ export const eventCreated = ({
     Data,
     ImagePath,
     ImageData,
-    ImageMime,
-    edit
+    ImageMime
   });
   const path = ImagePath.replace('file://', '');
   const user = Firebase.auth().currentUser.uid;
@@ -106,48 +106,25 @@ export const eventCreated = ({
         .child(`${image}`)
         .put(blob, { contentType: `${ImageMime}` })
         .then(() => {
-          if (edit === '') {
-            Firebase.database()
-              .ref('eventos')
-              .push({
-                Titulo,
-                Address,
-                Descricao,
-                Tags,
-                Local,
-                Data,
-                orgId: user,
-                image
-              })
-              .then(() => {
-                dispatch({
-                  type: EVENT_CREATED
-                });
-                Actions.pop();
-              })
-              .catch(error => console.log(error));
-          } else {
-            Firebase.database()
-              .ref('eventos')
-              .child(`${edit}`)
-              .set({
-                Titulo,
-                Address,
-                Descricao,
-                Tags,
-                Local,
-                Data,
-                orgId: user,
-                image
-              })
-              .then(() => {
-                dispatch({
-                  type: EVENT_EDIT
-                });
-                Actions.pop();
-              })
-              .catch(error => console.log(error));
-          }
+          Firebase.database()
+            .ref('eventos')
+            .push({
+              Titulo,
+              Address,
+              Descricao,
+              Tags,
+              Local,
+              Data,
+              orgId: user,
+              image
+            })
+            .then(() => {
+              dispatch({
+                type: EVENT_CREATED
+              });
+              Actions.pop();
+            })
+            .catch(error => console.log(error));
           blob.close();
         })
         .catch(error => console.log(error));
@@ -179,3 +156,154 @@ export const eventImageChange = ({ path, size, data, mime }) => {
 export const cancelForm = () => ({
   type: CANCEL_FORM_EVENT
 });
+
+export const eventEdited = ({
+  Titulo,
+  Address,
+  Descricao,
+  Tags,
+  Local,
+  Data,
+  ImageData,
+  ImagePath,
+  ImageMime,
+  uid,
+  oldImage
+}) => {
+  console.log(
+    Titulo,
+    Address,
+    Descricao,
+    Tags,
+    Local,
+    Data,
+    ImageData,
+    ImagePath,
+    ImageMime,
+    uid,
+    oldImage
+  );
+  if (_.includes(ImagePath, 'file://')) {
+    this.saveEditUploading({
+      Titulo,
+      Address,
+      Descricao,
+      Tags,
+      Local,
+      Data,
+      ImageData,
+      ImagePath,
+      ImageMime,
+      uid,
+      oldImage
+    });
+  } else {
+    console.log(uid);
+    var url = `/eventos/${uid}`;
+    console.log('evento => ', url);
+    return dispatch => {
+      Firebase.app()
+        .database()
+        .ref(url)
+        .put({
+          Titulo,
+          Address,
+          Descricao,
+          Tags,
+          Local,
+          Data
+        })
+        .then(() => {
+          dispatch({
+            type: EVENT_EDITED
+          });
+          Actions.pop();
+        })
+        .catch(error => console.log(error));
+    };
+  }
+};
+
+const saveEditUploading = ({
+  Titulo,
+  Address,
+  Descricao,
+  Tags,
+  Local,
+  Data,
+  ImageData,
+  ImagePath,
+  ImageMime,
+  uid,
+  oldImage
+}) => {
+  const path = ImagePath.replace('file://', '');
+  const user = Firebase.auth().currentUser.uid;
+  return dispatch => {
+    dispatch({
+      type: EVENT_EDIT_ATTEMPT
+    });
+    const polyfill = RNFetchBlob.polyfill;
+
+    window.XMLHttpRequest = polyfill.XMLHttpRequest;
+    window.Blob = polyfill.Blob;
+
+    const rnfbURI = RNFetchBlob.wrap(path);
+    let image = `${user}++${Date.now().toString()}`;
+
+    switch (ImageMime) {
+      case 'image/png':
+        image += '.png';
+        break;
+      case 'image/jpeg':
+        image += '.jpeg';
+        break;
+      case 'image/jpg':
+        image += '.jpg';
+        break;
+      default:
+        console.log(`Error: Image type: ${ImageMime}`);
+        return { type: null };
+    }
+
+    console.log(image);
+    //  TODO: ORG ID
+    Blob.build(rnfbURI, { type: `${ImageMime}` }).then(blob => {
+      Firebase.storage()
+        .ref('eventImages')
+        .child(`${image}`)
+        .put(blob, { contentType: `${ImageMime}` })
+        .then(() => {
+          Firebase.app()
+            .storage()
+            .refFromURL(oldImage)
+            .delete()
+            .then(() => {
+              Firebase.app()
+                .database()
+                .ref('/eventos')
+                .child(`${uid}`)
+                .set({
+                  Titulo,
+                  Address,
+                  Descricao,
+                  Tags,
+                  Local,
+                  Data,
+                  image
+                })
+                .then(() => {
+                  dispatch({
+                    type: EVENT_EDITED
+                  });
+                  Actions.pop();
+                })
+                .catch(error => console.log(error));
+              blob.close();
+            })
+            .catch(error => console.log(error));
+        })
+        .catch(error => console.log(error));
+    });
+  };
+};

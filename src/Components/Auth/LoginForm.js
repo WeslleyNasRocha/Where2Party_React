@@ -21,7 +21,12 @@ import {
   Label,
   Text
 } from 'native-base';
-import { emailChanged, passwordChanged, loginAttempt, loggedUser } from '../../Actions';
+import {
+  emailChanged,
+  passwordChanged,
+  loginAttempt,
+  loggedUser
+} from '../../Actions';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -56,7 +61,7 @@ class LoginForm extends Component {
   }
 
   onButtonPress() {
-    console.log(this.props);
+    // console.log(this.props);
     const { email, password } = this.props;
     this.props.loginAttempt({ email, password });
   }
@@ -112,7 +117,9 @@ class LoginForm extends Component {
               onPress={() => Actions.register()}
             >
               <Icon name="add-circle" />
-              <Text style={{ color: 'rgba(255,255,255,0.8)', alignSelf: 'center' }}>
+              <Text
+                style={{ color: 'rgba(255,255,255,0.8)', alignSelf: 'center' }}
+              >
                 Cadastrar-se
               </Text>
             </Button>

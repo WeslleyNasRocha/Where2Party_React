@@ -9,7 +9,8 @@ import {
   CANCEL_FORM_EVENT,
   EVENT_IMAGE_OVERSIZE,
   EVENT_IMAGE_CHANGE,
-  EVENT_EDIT
+  EVENT_EDITED,
+  EVENT_EDIT_ATTEMPT
 } from '../Actions/Types';
 
 const EventInitialState = {
@@ -34,13 +35,13 @@ export default (state = EventInitialState, action) => {
         [action.payload.prop]: action.payload.value
       };
     case SAVE_GPS_LOCALE:
-      console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...state,
         Local: action.payload
       };
     case CONVERT_GPS_TO_ADDRESS:
-      console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...state,
         Address: action.payload
@@ -55,7 +56,12 @@ export default (state = EventInitialState, action) => {
         ...state,
         ...EventInitialState
       };
-    case EVENT_EDIT:
+    case EVENT_EDIT_ATTEMPT:
+      return {
+        ...state,
+        Loading: true
+      };
+    case EVENT_EDITED:
       return {
         ...state,
         ...EventInitialState

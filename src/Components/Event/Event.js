@@ -31,17 +31,16 @@ class Event extends Component {
 
   openEvent() {
     //console.log(this.props);
+    // console.log(this.props.eventItem);
     Actions.EventHolder({ ...this.props.eventItem, ...this.state.imgUrl });
   }
 
   goToMap(local) {
-    console.log(local);
+    // console.log(local);
   }
 
   render() {
     const { Titulo, Descricao, Local } = this.props.eventItem;
-    // console.log(this.props);
-    // FIXME: Refresh not working
     return (
       <TouchableWithoutFeedback onPress={() => this.openEvent()}>
         <Card>

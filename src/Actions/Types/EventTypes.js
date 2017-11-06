@@ -9,12 +9,15 @@ export const EVENT_IMAGE_CHANGE = 'event_image_change';
 export const EVENT_IMAGE_OVERSIZE = 'event_image_oversize';
 export const CANCEL_FORM_EVENT = 'cancel_form_event';
 export const EVENT_SCREEN_LOAD_IMAGE = 'event_screen_load_image';
-export const EVENT_SCREEN_GET_CURRENT_POSITION = 'event_screen_get_current_position';
-export const EVENT_SCREEN_GET_EVENT_POSITION = 'event_screen_get_event_position';
+export const EVENT_SCREEN_GET_CURRENT_POSITION =
+  'event_screen_get_current_position';
+export const EVENT_SCREEN_GET_EVENT_POSITION =
+  'event_screen_get_event_position';
 export const EVENT_SCREEN_GET_ROUTE = 'event_screen_get_route';
 export const EVENT_SCREEN_GET_ROUTE_DATA = 'event_screen_get_route_data';
 export const CLEAN_STATE = 'clean_state';
 export const CHANGE_USER_SUBSCRIPTION = 'change_user_subscription';
 export const SET_SUB = 'set_sub';
 export const EVENT_OWNER = 'event_owner';
-export const EVENT_EDIT = 'event_edit';
+export const EVENT_EDIT_ATTEMPT = 'event_edit_attempt';
+export const EVENT_EDITED = 'event_edited';

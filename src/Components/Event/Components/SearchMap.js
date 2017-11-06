@@ -24,7 +24,12 @@ class SearchMap extends Component {
   }
 
   setLocale = () => {
-    const { latitude, longitude, latitudeDelta, longitudeDelta } = this.state.location.latlng;
+    const {
+      latitude,
+      longitude,
+      latitudeDelta,
+      longitudeDelta
+    } = this.state.location.latlng;
     this.props.saveGpsLocation({
       latitude,
       longitude,
@@ -35,7 +40,7 @@ class SearchMap extends Component {
   };
 
   renderMap = location => {
-    console.log('changed');
+    // console.log('changed');
     return (
       <MapView
         style={{ flex: 1 }}
@@ -75,7 +80,7 @@ class SearchMap extends Component {
             onPress={(data, details = null) => {
               const location = details.geometry.location;
               const address = details.formatted_address;
-              console.log(details);
+              // console.log(details);
               this.setState({
                 location: {
                   latlng: {
@@ -131,14 +136,17 @@ class SearchMap extends Component {
               rankby: 'distance',
               types: 'food'
             }}
-            filterReverseGeocodingByTypes={['locality', 'administrative_area_level_3']} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
+            filterReverseGeocodingByTypes={[
+              'locality',
+              'administrative_area_level_3'
+            ]} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
             debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
             renderLeftButton={() => (
               <Button transparent style={{ alignSelf: 'center' }}>
                 <Icon
                   style={{ fontSize: 35 }}
                   onPress={() => {
-                    console.log('clear');
+                    // console.log('clear');
                     this.GooglePlacesRef.setAddressText('');
                   }}
                   name="ios-backspace"
