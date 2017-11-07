@@ -16,6 +16,9 @@ import EditEvent from './Components/Event/EditEvent';
 import EditProfile from './Components/Profile/ProfileEdit';
 import SearchMap from './Components/Event/Components/SearchMap';
 
+import ChatScreen from './Components/Chat/ChatScreen';
+import PeopleList from './Components/Chat/PeopleList';
+
 const Routers = () => (
   <Router hideNavBar>
     <Scene key="root" hideNavBar>
@@ -37,6 +40,10 @@ const Routers = () => (
       <Scene key="SearchMap" component={SearchMap} hideNavBar />
       <Scene key="Profile" hideNavBar>
         <Scene key="ProfileEdit" hideNavBar component={EditProfile} />
+      </Scene>
+      <Scene key="Chat" hideNavBar>
+        <Scene key="EventChat" hideNavBar component={ChatScreen} />
+        <Scene key="PeopleList" hideNavBar component={PeopleList} />
       </Scene>
       <Scene key="configuracao" component={Configuracao} hideNavBar />
     </Scene>

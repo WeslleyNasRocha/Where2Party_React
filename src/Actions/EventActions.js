@@ -23,15 +23,9 @@ export const formValueChanged = ({ prop, value }) => ({
   payload: { prop, value }
 });
 
-export const saveGpsLocation = ({
-  latitude,
-  longitude,
-  latitudeDelta,
-  longitudeDelta,
-  Address
-}) => {
+export const saveGpsLocation = ({ latitude, longitude, latitudeDelta, longitudeDelta, Address }) =>
   // console.log({ latitude, longitude, latitudeDelta, longitudeDelta });
-  return dispatch => {
+  dispatch => {
     dispatch({
       type: SAVE_GPS_LOCALE,
       payload: { latitude, longitude, latitudeDelta, longitudeDelta }
@@ -43,7 +37,6 @@ export const saveGpsLocation = ({
     });
     Actions.pop();
   };
-};
 
 export const eventCreated = ({
   Titulo,
@@ -183,8 +176,9 @@ export const eventEdited = ({
     uid,
     oldImage
   );
+  const user = Firebase.auth().currentUser.uid;
   if (_.includes(ImagePath, 'file://')) {
-    this.saveEditUploading({
+    console.log(
       Titulo,
       Address,
       Descricao,
@@ -195,33 +189,62 @@ export const eventEdited = ({
       ImagePath,
       ImageMime,
       uid,
-      oldImage
-    });
-  } else {
-    console.log(uid);
-    var url = `/eventos/${uid}`;
-    console.log('evento => ', url);
+      oldImage,
+      user
+    );
     return dispatch => {
-      Firebase.app()
-        .database()
-        .ref(url)
-        .put({
-          Titulo,
-          Address,
-          Descricao,
-          Tags,
-          Local,
-          Data
-        })
-        .then(() => {
-          dispatch({
-            type: EVENT_EDITED
-          });
-          Actions.pop();
-        })
-        .catch(error => console.log(error));
+      saveEditUploading({
+        Titulo,
+        Address,
+        Descricao,
+        Tags,
+        Local,
+        Data,
+        ImageData,
+        ImagePath,
+        ImageMime,
+        uid,
+        oldImage,
+        user
+      });
+      dispatch({
+        type: EVENT_EDITED
+      });
+      Actions.pop();
     };
   }
+  console.log(uid);
+  const url = `/eventos/${uid}`;
+  console.log('evento => ', url);
+  return dispatch => {
+    Firebase.storage()
+      .refFromURL(oldImage)
+      .getMetadata()
+      .then(metadata => {
+        const image = metadata.name;
+        Firebase.app()
+          .database()
+          .ref(url)
+          .set({
+            Titulo,
+            Address,
+            Descricao,
+            Tags,
+            Local,
+            Data,
+            image,
+            orgId: user
+          })
+          .then(() => {
+            dispatch({
+              type: EVENT_EDITED
+            });
+            Actions.pop();
+          })
+          .catch(error => console.log(error));
+      })
+      .catch(error => console.log(error));
+  };
 };
 
 const saveEditUploading = ({
@@ -235,10 +258,11 @@ const saveEditUploading = ({
   ImagePath,
   ImageMime,
   uid,
-  oldImage
+  oldImage,
+  user
 }) => {
   const path = ImagePath.replace('file://', '');
-  const user = Firebase.auth().currentUser.uid;
+
   return dispatch => {
     dispatch({
       type: EVENT_EDIT_ATTEMPT
@@ -266,7 +290,7 @@ const saveEditUploading = ({
         return { type: null };
     }
 
-    console.log(image);
+    //console.log(image);
     //  TODO: ORG ID
     Blob.build(rnfbURI, { type: `${ImageMime}` }).then(blob => {
       Firebase.storage()
@@ -290,13 +314,8 @@ const saveEditUploading = ({
                   Tags,
                   Local,
                   Data,
-                  image
-                })
-                .then(() => {
-                  dispatch({
-                    type: EVENT_EDITED
-                  });
-                  Actions.pop();
+                  image,
+                  orgId: user
                 })
                 .catch(error => console.log(error));
               blob.close();

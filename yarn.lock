@@ -1807,6 +1807,10 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
+eslint-config-defaults@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-defaults/-/eslint-config-defaults-9.0.0.tgz#a090adc13b2935e3f43b3cd048a92701654e5ad5"
+
 eslint-config-rallycoding@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/eslint-config-rallycoding/-/eslint-config-rallycoding-3.2.0.tgz#1256f801742ba0e95757680e81fd14ff1dbeff86"
@@ -4541,10 +4545,6 @@ react-native-modal@3.1.0:
   dependencies:
     prop-types "15.5.10"
     react-native-animatable "^1.2.3"
-
-react-native-multiple-select@^0.2.1:
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/react-native-multiple-select/-/react-native-multiple-select-0.2.5.tgz#dd1c5d87bce3ae45c55ed42876754a4400d20eaa"
 
 react-native-root-siblings@^1.2.1:
   version "1.2.1"
